@@ -38,7 +38,7 @@ jobs:
       with:
         dotnet-version: 5.0.101
     - name: Publish
-      run: dotnet publish --configuration ${{ env.CONFIGURATION }} -o '/publish'
+      run: dotnet publish --configuration ${{ env.CONFIGURATION }} -o '/HttpHealthCheckDashboard/bin/publish'
     - name: Docker build
       run: docker build -f 'HttpHealthCheckDashboard/Dockerfile' -t docker.pkg.github.com/arnab-developer/httphealthcheckdashboard/httphealthcheckdashboard:1.0.0 .
     - name: Docker push
@@ -62,7 +62,7 @@ jobs:
       with:
         dotnet-version: 5.0.101
     - name: Publish
-      run: dotnet publish --configuration ${{ env.CONFIGURATION }} -o '/publish'
+      run: dotnet publish --configuration ${{ env.CONFIGURATION }} -o '/HttpHealthCheckDashboard/bin/publish'
     - name: Docker build
       run: docker build -f 'HttpHealthCheckDashboard/Dockerfile' -t 45862391/httphealthcheckdashboard:1.0.0 .
     - name: Docker push
