@@ -1,5 +1,8 @@
 # HTTP health check dashboard
 
+[![CI CD](https://github.com/Arnab-Developer/HttpHealthCheckDashboard/actions/workflows/ci-cd.yml/badge.svg)](https://github.com/Arnab-Developer/HttpHealthCheckDashboard/actions/workflows/ci-cd.yml)
+![Docker Image Version (latest by date)](https://img.shields.io/docker/v/45862391/httphealthcheckdashboard?label=docker)
+
 This is a dashboard to show health check results of your favorite http web 
 apps using `ArnabDeveloper.HttpHealthCheck` 
 [NuGet](https://www.nuget.org/packages/ArnabDeveloper.HttpHealthCheck/) library.
