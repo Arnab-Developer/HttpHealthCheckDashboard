@@ -1,9 +1,7 @@
 using ArnabDeveloper.HttpHealthCheck;
 using ArnabDeveloper.HttpHealthCheck.DI;
-using HealthChecks.UI.Client;
 using HttpHealthCheckDashboard.HealthChecks;
 using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
@@ -50,11 +48,7 @@ namespace HttpHealthCheckDashboard
                     }
                     return urlDetails.AsEnumerable();
                 })
-                .AddHealthChecks()
-                .AddCheck<MicrosoftHealthCheck>("Microsoft")
-                .AddCheck<GoogleHealthCheck>("Google")
-                .AddCheck<InactiveUrlHealthCheck>("InactiveUrl")
-                .AddCheck<InvalidUrlHealthCheck>("InvalidUrl");
+                .AddHealthChecksUrls();
 
             services
                 .AddHealthChecksUI()
@@ -75,26 +69,7 @@ namespace HttpHealthCheckDashboard
 
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapHealthChecks("/microsoft-hc", new HealthCheckOptions()
-                {
-                    Predicate = r => r.Name.Contains("Microsoft"),
-                    ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
-                });
-                endpoints.MapHealthChecks("/google-hc", new HealthCheckOptions()
-                {
-                    Predicate = r => r.Name.Contains("Google"),
-                    ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
-                });
-                endpoints.MapHealthChecks("/inactiveurl-hc", new HealthCheckOptions()
-                {
-                    Predicate = r => r.Name.Contains("InactiveUrl"),
-                    ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
-                });
-                endpoints.MapHealthChecks("/invalidurl-hc", new HealthCheckOptions()
-                {
-                    Predicate = r => r.Name.Contains("InvalidUrl"),
-                    ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
-                });
+                endpoints.MapHealthChecksUrls();
                 endpoints.MapGet("/", async context =>
                 {
                     await context.Response.WriteAsync("Hello World!");
