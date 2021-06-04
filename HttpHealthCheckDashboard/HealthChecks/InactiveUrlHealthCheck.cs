@@ -7,13 +7,13 @@ using System.Threading.Tasks;
 
 namespace HttpHealthCheckDashboard.HealthChecks
 {
-    internal class MicrosoftHealthCheck
+    internal class InactiveUrlHealthCheck
         : Microsoft.Extensions.Diagnostics.HealthChecks.IHealthCheck
     {
         private readonly IEnumerable<ApiDetail> _urlDetails;
         private readonly ICommonHealthCheck _commonHealthCheck;
 
-        public MicrosoftHealthCheck(IEnumerable<ApiDetail> urlDetails,
+        public InactiveUrlHealthCheck(IEnumerable<ApiDetail> urlDetails,
             ICommonHealthCheck commonHealthCheck)
         {
             _urlDetails = urlDetails;
@@ -23,8 +23,8 @@ namespace HttpHealthCheckDashboard.HealthChecks
         Task<HealthCheckResult> Microsoft.Extensions.Diagnostics.HealthChecks.IHealthCheck.CheckHealthAsync(
             HealthCheckContext context, CancellationToken cancellationToken)
         {
-            string apiNameToTest = nameof(MicrosoftHealthCheck).Substring(
-                0, nameof(MicrosoftHealthCheck).IndexOf("HealthCheck"));
+            string apiNameToTest = nameof(InactiveUrlHealthCheck).Substring(
+                0, nameof(InactiveUrlHealthCheck).IndexOf("HealthCheck"));
             ApiDetail? apiDetail = _urlDetails.FirstOrDefault(u => u.Name == apiNameToTest && u.IsEnable);
 
             return _commonHealthCheck.IsApiHealthy(apiDetail)

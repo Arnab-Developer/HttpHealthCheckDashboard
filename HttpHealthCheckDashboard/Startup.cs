@@ -1,4 +1,5 @@
 using ArnabDeveloper.HttpHealthCheck;
+using ArnabDeveloper.HttpHealthCheck.DI;
 using HealthChecks.UI.Client;
 using HttpHealthCheckDashboard.HealthChecks;
 using Microsoft.AspNetCore.Builder;
@@ -27,8 +28,7 @@ namespace HttpHealthCheckDashboard
         public void ConfigureServices(IServiceCollection services)
         {
             services
-                .AddHttpClient()
-                .AddTransient(typeof(IHealthCheck), typeof(HealthCheck))
+                .AddHttpHealthCheck()
                 .AddTransient(typeof(ICommonHealthCheck), typeof(CommonHealthCheck))
                 .AddTransient(options =>
                 {
@@ -52,7 +52,9 @@ namespace HttpHealthCheckDashboard
                 })
                 .AddHealthChecks()
                 .AddCheck<MicrosoftHealthCheck>("Microsoft")
-                .AddCheck<GoogleHealthCheck>("Google");
+                .AddCheck<GoogleHealthCheck>("Google")
+                .AddCheck<InactiveUrlHealthCheck>("InactiveUrl")
+                .AddCheck<InvalidUrlHealthCheck>("InvalidUrl");
 
             services
                 .AddHealthChecksUI()
@@ -81,6 +83,16 @@ namespace HttpHealthCheckDashboard
                 endpoints.MapHealthChecks("/google-hc", new HealthCheckOptions()
                 {
                     Predicate = r => r.Name.Contains("Google"),
+                    ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
+                });
+                endpoints.MapHealthChecks("/inactiveurl-hc", new HealthCheckOptions()
+                {
+                    Predicate = r => r.Name.Contains("InactiveUrl"),
+                    ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
+                });
+                endpoints.MapHealthChecks("/invalidurl-hc", new HealthCheckOptions()
+                {
+                    Predicate = r => r.Name.Contains("InvalidUrl"),
                     ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
                 });
                 endpoints.MapGet("/", async context =>
