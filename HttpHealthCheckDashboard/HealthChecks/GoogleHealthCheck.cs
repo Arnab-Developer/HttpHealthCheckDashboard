@@ -25,7 +25,7 @@ namespace HttpHealthCheckDashboard.HealthChecks
         {
             string apiNameToTest = nameof(GoogleHealthCheck).Substring(
                 0, nameof(GoogleHealthCheck).IndexOf("HealthCheck"));
-            ApiDetail? apiDetail = _urlDetails.FirstOrDefault(u => u.Name == apiNameToTest);
+            ApiDetail? apiDetail = _urlDetails.FirstOrDefault(u => u.Name == apiNameToTest && u.IsEnable);
 
             return _commonHealthCheck.IsApiHealthy(apiDetail)
                 ? Task.FromResult(HealthCheckResult.Healthy())
