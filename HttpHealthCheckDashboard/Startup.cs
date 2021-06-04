@@ -1,4 +1,5 @@
 using ArnabDeveloper.HttpHealthCheck;
+using ArnabDeveloper.HttpHealthCheck.DI;
 using HealthChecks.UI.Client;
 using HttpHealthCheckDashboard.HealthChecks;
 using Microsoft.AspNetCore.Builder;
@@ -27,8 +28,7 @@ namespace HttpHealthCheckDashboard
         public void ConfigureServices(IServiceCollection services)
         {
             services
-                .AddHttpClient()
-                .AddTransient(typeof(IHealthCheck), typeof(HealthCheck))
+                .AddHttpHealthCheck()
                 .AddTransient(typeof(ICommonHealthCheck), typeof(CommonHealthCheck))
                 .AddTransient(options =>
                 {

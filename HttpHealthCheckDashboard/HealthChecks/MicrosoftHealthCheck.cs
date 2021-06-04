@@ -23,7 +23,9 @@ namespace HttpHealthCheckDashboard.HealthChecks
         Task<HealthCheckResult> Microsoft.Extensions.Diagnostics.HealthChecks.IHealthCheck.CheckHealthAsync(
             HealthCheckContext context, CancellationToken cancellationToken)
         {
-            ApiDetail? apiDetail = _urlDetails.FirstOrDefault(u => u.Name == "Microsoft");
+            string apiNameToTest = nameof(MicrosoftHealthCheck).Substring(
+                0, nameof(MicrosoftHealthCheck).IndexOf("HealthCheck"));
+            ApiDetail? apiDetail = _urlDetails.FirstOrDefault(u => u.Name == apiNameToTest);
 
             return _commonHealthCheck.IsApiHealthy(apiDetail)
                 ? Task.FromResult(HealthCheckResult.Healthy())
