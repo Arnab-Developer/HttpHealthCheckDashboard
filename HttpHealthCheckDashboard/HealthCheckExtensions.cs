@@ -12,21 +12,33 @@ namespace HttpHealthCheckDashboard
         public static IHealthChecksBuilder AddHealthChecksUrls(this IServiceCollection services) =>
             services
                 .AddHealthChecks()
-                .AddCheck<MicrosoftHealthCheck>("Microsoft")
-                .AddCheck<GoogleHealthCheck>("Google")
+                .AddCheck<BlogHealthCheck>("Blog")
+                .AddCheck<GitHubHealthCheck>("GitHub")
+                .AddCheck<TwitterHealthCheck>("Twitter")
+                .AddCheck<InstagramHealthCheck>("Instagram")
                 .AddCheck<InactiveUrlHealthCheck>("InactiveUrl")
                 .AddCheck<InvalidUrlHealthCheck>("InvalidUrl");
 
         public static void MapHealthChecksUrls(this IEndpointRouteBuilder endpoints)
         {
-            endpoints.MapHealthChecks("/microsoft-hc", new HealthCheckOptions()
+            endpoints.MapHealthChecks("/blog-hc", new HealthCheckOptions()
             {
-                Predicate = r => r.Name.Contains("Microsoft"),
+                Predicate = r => r.Name.Contains("Blog"),
                 ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
             });
-            endpoints.MapHealthChecks("/google-hc", new HealthCheckOptions()
+            endpoints.MapHealthChecks("/github-hc", new HealthCheckOptions()
             {
-                Predicate = r => r.Name.Contains("Google"),
+                Predicate = r => r.Name.Contains("GitHub"),
+                ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
+            });
+            endpoints.MapHealthChecks("/twitter-hc", new HealthCheckOptions()
+            {
+                Predicate = r => r.Name.Contains("Twitter"),
+                ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
+            });
+            endpoints.MapHealthChecks("/instagram-hc", new HealthCheckOptions()
+            {
+                Predicate = r => r.Name.Contains("Instagram"),
                 ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
             });
             endpoints.MapHealthChecks("/inactiveurl-hc", new HealthCheckOptions()
