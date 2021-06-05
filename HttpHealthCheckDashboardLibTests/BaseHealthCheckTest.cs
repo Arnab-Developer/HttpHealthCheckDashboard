@@ -1,6 +1,5 @@
 ﻿using ArnabDeveloper.HttpHealthCheck;
 using HttpHealthCheckDashboardLib;
-using HttpHealthCheckDashboardLib.HealthChecks;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Moq;
 using System.Collections.Generic;
@@ -14,6 +13,8 @@ namespace HttpHealthCheckDashboardLibTests
     {
         private readonly IEnumerable<ApiDetail> _urlDetails;
         private readonly Mock<ICommonHealthCheck> _commonHealthCheckMock;
+        private readonly Mock<BaseHealthCheck> _baseHealthCheckMock;
+        private Microsoft.Extensions.Diagnostics.HealthChecks.IHealthCheck? _healthCheck;
 
         public BaseHealthCheckTest()
         {
@@ -21,10 +22,11 @@ namespace HttpHealthCheckDashboardLibTests
             {
                 new ApiDetail("api1", "url1", new ApiCredential("user1", "pass1"), true),
                 new ApiDetail("api2", "url2", new ApiCredential("user2", "pass2"), true),
-                new ApiDetail("Blog", "url3", new ApiCredential("user3", "pass3"), true),
+                new ApiDetail("Base", "url3", new ApiCredential("user3", "pass3"), true),
                 new ApiDetail("api4", "url4", new ApiCredential("user4", "pass4"), true)
             };
             _commonHealthCheckMock = new Mock<ICommonHealthCheck>();
+            _baseHealthCheckMock = new Mock<BaseHealthCheck>(_urlDetails, _commonHealthCheckMock.Object);
         }
 
         [Fact]
@@ -34,10 +36,9 @@ namespace HttpHealthCheckDashboardLibTests
                 .Setup(s => s.IsApiHealthy(_urlDetails.ElementAt(2)))
                 .Returns(true);
 
-            Microsoft.Extensions.Diagnostics.HealthChecks.IHealthCheck blogHealthCheck
-                = new BlogHealthCheck(_urlDetails, _commonHealthCheckMock.Object);
+            _healthCheck = _baseHealthCheckMock.Object;
 
-            HealthCheckResult healthCheckResult = blogHealthCheck.CheckHealthAsync(
+            HealthCheckResult healthCheckResult = _healthCheck.CheckHealthAsync(
                 new HealthCheckContext(), new CancellationToken()).Result;
 
             Assert.Equal(HealthCheckResult.Healthy(), healthCheckResult);
@@ -50,10 +51,9 @@ namespace HttpHealthCheckDashboardLibTests
                 .Setup(s => s.IsApiHealthy(_urlDetails.ElementAt(2)))
                 .Returns(false);
 
-            Microsoft.Extensions.Diagnostics.HealthChecks.IHealthCheck blogHealthCheck
-                = new BlogHealthCheck(_urlDetails, _commonHealthCheckMock.Object);
+            _healthCheck = _baseHealthCheckMock.Object;
 
-            HealthCheckResult healthCheckResult = blogHealthCheck.CheckHealthAsync(
+            HealthCheckResult healthCheckResult = _healthCheck.CheckHealthAsync(
                 new HealthCheckContext(), new CancellationToken()).Result;
 
             Assert.Equal(HealthCheckResult.Unhealthy(), healthCheckResult);
