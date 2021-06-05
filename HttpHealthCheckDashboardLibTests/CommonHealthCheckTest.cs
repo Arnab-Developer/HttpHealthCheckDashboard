@@ -2,6 +2,7 @@ using ArnabDeveloper.HttpHealthCheck;
 using HttpHealthCheckDashboardLib;
 using Moq;
 using Xunit;
+using System;
 
 namespace HttpHealthCheckDashboardLibTests
 {
@@ -84,6 +85,20 @@ namespace HttpHealthCheckDashboardLibTests
                 .Returns(true);
 
             bool isApiHealthy = _commonHealthCheck.IsApiHealthy(null);
+
+            Assert.False(isApiHealthy);
+        }
+
+        [Fact]
+        public void Can_IsApiHealthy_ReturnFalseForException()
+        {
+            ApiDetail apiDetail = new("demo name", "demo url", null, true);
+
+            _healthCheckMock
+                .Setup(s => s.IsHealthy(apiDetail.Url, null))
+                .Throws<NullReferenceException>();
+
+            bool isApiHealthy = _commonHealthCheck.IsApiHealthy(apiDetail);
 
             Assert.False(isApiHealthy);
         }
