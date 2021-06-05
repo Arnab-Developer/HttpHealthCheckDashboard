@@ -5,15 +5,15 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace HttpHealthCheckDashboard.HealthChecks
+namespace HttpHealthCheckDashboardLib.HealthChecks
 {
-    internal class GitHubHealthCheck
+    public class TwitterHealthCheck
         : Microsoft.Extensions.Diagnostics.HealthChecks.IHealthCheck
     {
         private readonly IEnumerable<ApiDetail> _urlDetails;
         private readonly ICommonHealthCheck _commonHealthCheck;
 
-        public GitHubHealthCheck(IEnumerable<ApiDetail> urlDetails,
+        public TwitterHealthCheck(IEnumerable<ApiDetail> urlDetails,
             ICommonHealthCheck commonHealthCheck)
         {
             _urlDetails = urlDetails;
@@ -23,8 +23,8 @@ namespace HttpHealthCheckDashboard.HealthChecks
         Task<HealthCheckResult> Microsoft.Extensions.Diagnostics.HealthChecks.IHealthCheck.CheckHealthAsync(
             HealthCheckContext context, CancellationToken cancellationToken)
         {
-            string apiNameToTest = nameof(GitHubHealthCheck).Substring(
-                0, nameof(GitHubHealthCheck).IndexOf("HealthCheck"));
+            string apiNameToTest = nameof(TwitterHealthCheck).Substring(
+                0, nameof(TwitterHealthCheck).IndexOf("HealthCheck"));
             ApiDetail? apiDetail = _urlDetails.FirstOrDefault(u => u.Name == apiNameToTest && u.IsEnable);
 
             return _commonHealthCheck.IsApiHealthy(apiDetail)

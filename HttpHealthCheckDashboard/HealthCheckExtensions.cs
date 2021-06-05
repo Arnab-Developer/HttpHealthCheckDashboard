@@ -1,5 +1,5 @@
 ﻿using HealthChecks.UI.Client;
-using HttpHealthCheckDashboard.HealthChecks;
+using HttpHealthCheckDashboardLib.HealthChecks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.AspNetCore.Routing;

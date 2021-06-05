@@ -1,6 +1,6 @@
 ﻿using ArnabDeveloper.HttpHealthCheck;
 
-namespace HttpHealthCheckDashboard.HealthChecks
+namespace HttpHealthCheckDashboardLib
 {
     public interface ICommonHealthCheck
     {
