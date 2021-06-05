@@ -102,5 +102,65 @@ namespace HttpHealthCheckDashboardLibTests
 
             Assert.False(isApiHealthy);
         }
+
+        [Fact]
+        public void Can_IsApiHealthy_ReturnTrueForUrlWithEmptyCredential()
+        {
+            ApiCredential apiCredential = new(string.Empty, string.Empty);
+            ApiDetail apiDetail = new("demo name", "demo url", apiCredential, true);
+
+            _healthCheckMock
+                .Setup(s => s.IsHealthy(apiDetail.Url, null))
+                .Returns(true);
+
+            bool isApiHealthy = _commonHealthCheck.IsApiHealthy(apiDetail);
+
+            Assert.True(isApiHealthy);
+        }
+
+        [Fact]
+        public void Can_IsApiHealthy_ReturnFalseForUrlWithEmptyCredential()
+        {
+            ApiCredential apiCredential = new(string.Empty, string.Empty);
+            ApiDetail apiDetail = new("demo name", "demo url", apiCredential, true);
+
+            _healthCheckMock
+                .Setup(s => s.IsHealthy(apiDetail.Url, null))
+                .Returns(false);
+
+            bool isApiHealthy = _commonHealthCheck.IsApiHealthy(apiDetail);
+
+            Assert.False(isApiHealthy);
+        }
+
+        [Fact]
+        public void Can_IsApiHealthy_ReturnTrueForUrlWithSpaceInCredential()
+        {
+            ApiCredential apiCredential = new(" ", " ");
+            ApiDetail apiDetail = new("demo name", "demo url", apiCredential, true);
+
+            _healthCheckMock
+                .Setup(s => s.IsHealthy(apiDetail.Url, null))
+                .Returns(true);
+
+            bool isApiHealthy = _commonHealthCheck.IsApiHealthy(apiDetail);
+
+            Assert.True(isApiHealthy);
+        }
+
+        [Fact]
+        public void Can_IsApiHealthy_ReturnFalseForUrlWithSpaceInCredential()
+        {
+            ApiCredential apiCredential = new(" ", " ");
+            ApiDetail apiDetail = new("demo name", "demo url", apiCredential, true);
+
+            _healthCheckMock
+                .Setup(s => s.IsHealthy(apiDetail.Url, null))
+                .Returns(false);
+
+            bool isApiHealthy = _commonHealthCheck.IsApiHealthy(apiDetail);
+
+            Assert.False(isApiHealthy);
+        }
     }
 }
