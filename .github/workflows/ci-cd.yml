@@ -24,6 +24,8 @@ jobs:
         dotnet-version: 5.0.300
     - name: Build
       run: dotnet build --configuration ${{ env.CONFIGURATION }}
+    - name: Test
+      run: dotnet test --configuration ${{ env.CONFIGURATION }}
 
   github-package-deploy:
     if: ${{ github.event_name == 'push' }}
