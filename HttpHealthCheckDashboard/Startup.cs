@@ -27,7 +27,7 @@ namespace HttpHealthCheckDashboard
         {
             services
                 .AddHttpHealthCheck()
-                //.AddTransient(typeof(ICommonHealthCheck), typeof(CommonHealthCheck))
+                .AddTransient(typeof(ICommonHealthCheck), typeof(CommonHealthCheck))
                 .AddTransient(options =>
                 {
                     IEnumerable<IConfigurationSection> sections = Configuration.GetSection("ApiDetails").GetChildren();
