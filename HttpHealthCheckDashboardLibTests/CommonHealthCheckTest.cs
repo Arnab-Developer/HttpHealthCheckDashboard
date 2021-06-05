@@ -1,8 +1,8 @@
 using ArnabDeveloper.HttpHealthCheck;
 using HttpHealthCheckDashboardLib;
 using Moq;
-using Xunit;
 using System;
+using Xunit;
 
 namespace HttpHealthCheckDashboardLibTests
 {

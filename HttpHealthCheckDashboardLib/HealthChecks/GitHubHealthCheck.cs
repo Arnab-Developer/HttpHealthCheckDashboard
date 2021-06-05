@@ -1,35 +1,13 @@
 ﻿using ArnabDeveloper.HttpHealthCheck;
-using Microsoft.Extensions.Diagnostics.HealthChecks;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace HttpHealthCheckDashboardLib.HealthChecks
 {
-    public class GitHubHealthCheck
-        : Microsoft.Extensions.Diagnostics.HealthChecks.IHealthCheck
+    public class GitHubHealthCheck : BaseHealthCheck
     {
-        private readonly IEnumerable<ApiDetail> _urlDetails;
-        private readonly ICommonHealthCheck _commonHealthCheck;
-
-        public GitHubHealthCheck(IEnumerable<ApiDetail> urlDetails,
-            ICommonHealthCheck commonHealthCheck)
+        public GitHubHealthCheck(IEnumerable<ApiDetail> urlDetails, ICommonHealthCheck commonHealthCheck)
+            : base(urlDetails, commonHealthCheck)
         {
-            _urlDetails = urlDetails;
-            _commonHealthCheck = commonHealthCheck;
-        }
-
-        Task<HealthCheckResult> Microsoft.Extensions.Diagnostics.HealthChecks.IHealthCheck.CheckHealthAsync(
-            HealthCheckContext context, CancellationToken cancellationToken)
-        {
-            string apiNameToTest = nameof(GitHubHealthCheck).Substring(
-                0, nameof(GitHubHealthCheck).IndexOf("HealthCheck"));
-            ApiDetail? apiDetail = _urlDetails.FirstOrDefault(u => u.Name == apiNameToTest && u.IsEnable);
-
-            return _commonHealthCheck.IsApiHealthy(apiDetail)
-                ? Task.FromResult(HealthCheckResult.Healthy())
-                : Task.FromResult(HealthCheckResult.Unhealthy());
         }
     }
 }

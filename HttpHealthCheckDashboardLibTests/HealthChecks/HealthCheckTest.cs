@@ -8,7 +8,7 @@ using System.Linq;
 using System.Threading;
 using Xunit;
 
-namespace HttpHealthCheckDashboardLibTests
+namespace HttpHealthCheckDashboardLibTests.HealthChecks
 {
     public class HealthCheckTest
     {
@@ -26,7 +26,7 @@ namespace HttpHealthCheckDashboardLibTests
             commonHealthCheckMock
                 .Setup(s => s.IsApiHealthy(urlDetails.ElementAt(2)))
                 .Returns(true);
-            Microsoft.Extensions.Diagnostics.HealthChecks.IHealthCheck blogHealthCheck 
+            Microsoft.Extensions.Diagnostics.HealthChecks.IHealthCheck blogHealthCheck
                 = new BlogHealthCheck(urlDetails, commonHealthCheckMock.Object);
 
             HealthCheckResult healthCheckResult = blogHealthCheck.CheckHealthAsync(
