@@ -13,4 +13,8 @@
     <PackageReference Include="AspNetCore.HealthChecks.UI.InMemory.Storage" Version="5.0.1" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\HttpHealthCheckDashboardLib\HttpHealthCheckDashboardLib.csproj" />
+  </ItemGroup>
+
 </Project>

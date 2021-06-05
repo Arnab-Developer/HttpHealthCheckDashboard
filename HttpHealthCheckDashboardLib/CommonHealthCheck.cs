@@ -1,8 +1,8 @@
 ﻿using ArnabDeveloper.HttpHealthCheck;
 
-namespace HttpHealthCheckDashboard.HealthChecks
+namespace HttpHealthCheckDashboardLib
 {
-    internal class CommonHealthCheck : ICommonHealthCheck
+    public class CommonHealthCheck : ICommonHealthCheck
     {
         private readonly IHealthCheck _healthCheck;
 

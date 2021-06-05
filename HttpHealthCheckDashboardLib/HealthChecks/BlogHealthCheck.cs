@@ -5,9 +5,9 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace HttpHealthCheckDashboard.HealthChecks
+namespace HttpHealthCheckDashboardLib.HealthChecks
 {
-    internal class BlogHealthCheck
+    public class BlogHealthCheck
         : Microsoft.Extensions.Diagnostics.HealthChecks.IHealthCheck
     {
         private readonly IEnumerable<ApiDetail> _urlDetails;
