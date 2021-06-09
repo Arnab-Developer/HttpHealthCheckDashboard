@@ -27,7 +27,7 @@ in this app then do the following changes.
 
 - Add a new section in `appsettings.json` under `ApiDetails`
 
-``` json
+```
 "ApiDetails": [
   {
     "Name": "[name of the URI]",
@@ -43,7 +43,7 @@ in this app then do the following changes.
 
 - Add a new section in `appsettings.json` under `HealthChecks-UI` -> `HealthChecks`
 
-``` json
+```
 "HealthChecks-UI": {
   "HealthChecks": [
     {
@@ -56,7 +56,7 @@ in this app then do the following changes.
 
 - Create a new class inside `HttpHealthCheckDashboardLib` -> `HealthChecks`
 
-``` csharp
+```
 public class [ClassName]HealthCheck : BaseHealthCheck
 {
     public [ClassName]HealthCheck(IEnumerable<ApiDetail> urlDetails, ICommonHealthCheck commonHealthCheck)
