@@ -75,6 +75,22 @@ public static IHealthChecksBuilder AddHealthChecksUrls(this IServiceCollection s
         .AddCheck<[ClassName]HealthCheck>("[ClassName]");
 ```
 
+- Add endpoint mapping in `HttpHealthCheckDashboard.HealthCheckExtensions.MapHealthChecksUrls(this IEndpointRouteBuilder endpoints)`
+
+```
+public static void MapHealthChecksUrls(this IEndpointRouteBuilder endpoints)
+{
+    endpoints.MapHealthChecks("/[classname]-hc", new HealthCheckOptions()
+    {
+        Predicate = r => r.Name.Contains("[ClassName]"),
+        ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
+    });
+}
+```
+
+- Open your bowser and navigate to `http://localhost:[your-machine-port]/hc-ui` and you 
+should see your new URI in the health check app.
+
 ## License
 
 [MIT License](https://github.com/Arnab-Developer/HttpHealthCheckDashboard/blob/main/LICENSE)
