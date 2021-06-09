@@ -25,7 +25,7 @@ This app is checking health of some URIs, you can find them in `appsettings.json
 and `appsettings.Development.json` file. If you want to check your own URI as well
 in this app then do the following changes.
 
-- Add a new section in `appsettings.json` under `ApiDetails`.
+- Add a new section in `appsettings.json` under `ApiDetails`:
 
 ``` json
 "ApiDetails": [
@@ -41,7 +41,18 @@ in this app then do the following changes.
 ]
 ```
 
-- 
+- Add a new section in `appsettings.json` under `HealthChecks-UI` > `HealthChecks`:
+
+```
+"HealthChecks-UI": {
+  "HealthChecks": [
+    {
+      "Name": "[name of health check]",
+      "Uri": "[health check URI]"
+    }
+  ]
+}
+```
 
 ## License
 
