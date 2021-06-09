@@ -66,6 +66,15 @@ public class [ClassName]HealthCheck : BaseHealthCheck
 }
 ```
 
+- Add the class into `HttpHealthCheckDashboard.HealthCheckExtensions.AddHealthChecksUrls(this IServiceCollection services)`
+
+```
+public static IHealthChecksBuilder AddHealthChecksUrls(this IServiceCollection services) =>
+    services
+        .AddHealthChecks()
+        .AddCheck<[ClassName]HealthCheck>("[ClassName]");
+```
+
 ## License
 
 [MIT License](https://github.com/Arnab-Developer/HttpHealthCheckDashboard/blob/main/LICENSE)
