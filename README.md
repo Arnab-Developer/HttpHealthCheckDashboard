@@ -19,6 +19,30 @@ container image.
 - ASP.NET 5
 - Docker hub for container hosting
 
+## How to extend this app
+
+This app is checking health of some URIs, you can find them in `appsettings.json`
+and `appsettings.Development.json` file. If you want to check your own URI as well
+in this app then do the following changes.
+
+- Add a new section in `appsettings.json` under `ApiDetails`.
+
+``` json
+"ApiDetails": [
+  {
+    "Name": "[name of the URI]",
+    "Url": "[URI]",
+    "Credential": {
+      "UserName": "[user name if any]",
+      "Password": "[password if any]"
+    },
+    "IsEnable": true
+  }
+]
+```
+
+- 
+
 ## License
 
 [MIT License](https://github.com/Arnab-Developer/HttpHealthCheckDashboard/blob/main/LICENSE)
