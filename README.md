@@ -25,7 +25,7 @@ This app is checking health of some URIs, you can find them in `appsettings.json
 and `appsettings.Development.json` file. If you want to check your own URI as well
 in this app then do the following changes.
 
-- Add a new section in `appsettings.json` under `ApiDetails`:
+- Add a new section in `appsettings.json` under `ApiDetails`
 
 ``` json
 "ApiDetails": [
@@ -41,9 +41,9 @@ in this app then do the following changes.
 ]
 ```
 
-- Add a new section in `appsettings.json` under `HealthChecks-UI` > `HealthChecks`:
+- Add a new section in `appsettings.json` under `HealthChecks-UI` -> `HealthChecks`
 
-```
+``` json
 "HealthChecks-UI": {
   "HealthChecks": [
     {
@@ -51,6 +51,18 @@ in this app then do the following changes.
       "Uri": "[health check URI]"
     }
   ]
+}
+```
+
+- Create a new class inside `HttpHealthCheckDashboardLib` -> `HealthChecks`
+
+``` csharp
+public class [ClassName]HealthCheck : BaseHealthCheck
+{
+    public [ClassName]HealthCheck(IEnumerable<ApiDetail> urlDetails, ICommonHealthCheck commonHealthCheck)
+        : base(urlDetails, commonHealthCheck)
+    {
+    }
 }
 ```
 
