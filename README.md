@@ -54,7 +54,8 @@ in this app then do the following changes.
 }
 ```
 
-- Create a new class inside `HttpHealthCheckDashboardLib` -> `HealthChecks`
+- Create a new class inside `HttpHealthCheckDashboardLib` -> `HealthChecks` which
+inherits `BaseHealthCheck`
 
 ```
 public class [ClassName]HealthCheck : BaseHealthCheck
