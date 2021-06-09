@@ -19,6 +19,79 @@ container image.
 - ASP.NET 5
 - Docker hub for container hosting
 
+## How to extend this app
+
+This app is checking health of some URIs, you can find them in `appsettings.json`
+and `appsettings.Development.json` file. If you want to check your own URI as well
+in this app then do the following changes.
+
+- Add a new section in `appsettings.json` under `ApiDetails`
+
+```
+"ApiDetails": [
+  {
+    "Name": "[name of the URI]",
+    "Url": "[URI]",
+    "Credential": {
+      "UserName": "[user name if any]",
+      "Password": "[password if any]"
+    },
+    "IsEnable": true
+  }
+]
+```
+
+- Add a new section in `appsettings.json` under `HealthChecks-UI` -> `HealthChecks`
+
+```
+"HealthChecks-UI": {
+  "HealthChecks": [
+    {
+      "Name": "[name of health check]",
+      "Uri": "[health check URI]"
+    }
+  ]
+}
+```
+
+- Create a new class inside `HttpHealthCheckDashboardLib` -> `HealthChecks` which
+inherits `BaseHealthCheck`
+
+```
+public class [ClassName]HealthCheck : BaseHealthCheck
+{
+    public [ClassName]HealthCheck(IEnumerable<ApiDetail> urlDetails, ICommonHealthCheck commonHealthCheck)
+        : base(urlDetails, commonHealthCheck)
+    {
+    }
+}
+```
+
+- Add the class into `HttpHealthCheckDashboard.HealthCheckExtensions.AddHealthChecksUrls(this IServiceCollection services)`
+
+```
+public static IHealthChecksBuilder AddHealthChecksUrls(this IServiceCollection services) =>
+    services
+        .AddHealthChecks()
+        .AddCheck<[ClassName]HealthCheck>("[ClassName]");
+```
+
+- Add endpoint mapping in `HttpHealthCheckDashboard.HealthCheckExtensions.MapHealthChecksUrls(this IEndpointRouteBuilder endpoints)`
+
+```
+public static void MapHealthChecksUrls(this IEndpointRouteBuilder endpoints)
+{
+    endpoints.MapHealthChecks("/[classname]-hc", new HealthCheckOptions()
+    {
+        Predicate = r => r.Name.Contains("[ClassName]"),
+        ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
+    });
+}
+```
+
+- Open your bowser and navigate to `http://localhost:[your-machine-port]/hc-ui` and you 
+should see your new URI in the health check app.
+
 ## License
 
 [MIT License](https://github.com/Arnab-Developer/HttpHealthCheckDashboard/blob/main/LICENSE)
