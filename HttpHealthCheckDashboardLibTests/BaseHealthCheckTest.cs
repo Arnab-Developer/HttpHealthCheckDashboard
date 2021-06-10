@@ -152,11 +152,14 @@ namespace HttpHealthCheckDashboardLibTests
 
             Mock<ICommonHealthCheck> commonHealthCheckMock = new();
             TestHealthCheck testHealthCheck = new(urlDetails, commonHealthCheckMock.Object);
+            
             commonHealthCheckMock
                 .Setup(s => s.IsApiHealthy(urlDetails.ElementAt(2)))
                 .Returns(true);
+            
             MethodInfo? GetMatchInfo = testHealthCheck.GetType()
                 .GetMethod("GetMatch", BindingFlags.NonPublic | BindingFlags.Instance);
+            
             Assert.NotNull(GetMatchInfo);
             if (GetMatchInfo != null)
             {
