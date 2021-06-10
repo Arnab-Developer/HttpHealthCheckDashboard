@@ -5,9 +5,8 @@ namespace HttpHealthCheckDashboardLib.HealthChecks
 {
     public class InactiveUrlHealthCheck : BaseHealthCheck
     {
-        public InactiveUrlHealthCheck(IEnumerable<ApiDetail> urlDetails, ICommonHealthCheck commonHealthCheck,
-            IApiDetailFinder apiDetailFinder)
-            : base(urlDetails, commonHealthCheck, apiDetailFinder)
+        public InactiveUrlHealthCheck(IEnumerable<ApiDetail> urlDetails, ICommonHealthCheck commonHealthCheck)
+            : base(urlDetails, commonHealthCheck)
         {
         }
     }
