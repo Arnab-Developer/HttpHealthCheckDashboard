@@ -5,16 +5,16 @@ using System.Collections.Generic;
 
 namespace HttpHealthCheckDashboardLibTests
 {
-    public class Test1CustomMatchHealthCheck : BaseHealthCheck
+    public class TestAnotherCustomMatchHealthCheck : BaseHealthCheck
     {
-        public Test1CustomMatchHealthCheck(IEnumerable<ApiDetail> urlDetails, ICommonHealthCheck commonHealthCheck)
+        public TestAnotherCustomMatchHealthCheck(IEnumerable<ApiDetail> urlDetails, ICommonHealthCheck commonHealthCheck)
             : base(urlDetails, commonHealthCheck)
         {
         }
 
         protected override Predicate<ApiDetail> GetMatch()
         {
-            int indexOfHealthCheck = GetType().Name.IndexOf("CustomMatchHealthCheck");
+            int indexOfHealthCheck = GetType().Name.IndexOf("AnotherCustomMatchHealthCheck");
             string apiNameToTest = GetType().Name.Substring(0, indexOfHealthCheck);
             return new Predicate<ApiDetail>(u => u.Name == apiNameToTest && u.IsEnable);
         }
