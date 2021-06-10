@@ -1,4 +1,4 @@
-# HTTP health check dashboard
+# HTTP health check web dashboard
 
 [![CI CD](https://github.com/Arnab-Developer/HttpHealthCheckDashboard/actions/workflows/ci-cd.yml/badge.svg)](https://github.com/Arnab-Developer/HttpHealthCheckDashboard/actions/workflows/ci-cd.yml)
 ![Docker Image Version (latest by date)](https://img.shields.io/docker/v/45862391/httphealthcheckdashboard?label=docker)
