@@ -1,7 +1,8 @@
-﻿using ArnabDeveloper.HttpHealthCheck;
+﻿using Arc.HttpHealthCheckDashboard;
+using ArnabDeveloper.HttpHealthCheck;
 using System.Collections.Generic;
 
-namespace HttpHealthCheckDashboardLib.HealthChecks
+namespace HttpHealthCheckDashboard
 {
     public class BlogHealthCheck : BaseHealthCheck
     {

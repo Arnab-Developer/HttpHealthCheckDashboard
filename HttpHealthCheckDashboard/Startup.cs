@@ -1,6 +1,5 @@
+using Arc.HttpHealthCheckDashboard.DI;
 using ArnabDeveloper.HttpHealthCheck;
-using ArnabDeveloper.HttpHealthCheck.DI;
-using HttpHealthCheckDashboardLib;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -26,8 +25,7 @@ namespace HttpHealthCheckDashboard
         public void ConfigureServices(IServiceCollection services)
         {
             services
-                .AddHttpHealthCheck()
-                .AddTransient(typeof(ICommonHealthCheck), typeof(CommonHealthCheck))
+                .AddHttpHealthCheckDashboard()
                 .AddTransient(options =>
                 {
                     IEnumerable<IConfigurationSection> sections = Configuration.GetSection("ApiDetails").GetChildren();

@@ -1,5 +1,4 @@
 ﻿using HealthChecks.UI.Client;
-using HttpHealthCheckDashboardLib.HealthChecks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.AspNetCore.Routing;
@@ -17,7 +16,8 @@ namespace HttpHealthCheckDashboard
                 .AddCheck<TwitterHealthCheck>("Twitter")
                 .AddCheck<InstagramHealthCheck>("Instagram")
                 .AddCheck<InactiveUrlHealthCheck>("InactiveUrl")
-                .AddCheck<InvalidUrlHealthCheck>("InvalidUrl");
+                .AddCheck<InvalidUrlHealthCheck>("InvalidUrl")
+                .AddCheck<GmailHealthCheck>("Gmail");
 
         public static void MapHealthChecksUrls(this IEndpointRouteBuilder endpoints)
         {
@@ -49,6 +49,11 @@ namespace HttpHealthCheckDashboard
             endpoints.MapHealthChecks("/invalidurl-hc", new HealthCheckOptions()
             {
                 Predicate = r => r.Name.Contains("InvalidUrl"),
+                ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
+            });
+            endpoints.MapHealthChecks("/gmail-hc", new HealthCheckOptions()
+            {
+                Predicate = r => r.Name.Contains("Gmail"),
                 ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
             });
         }
