@@ -179,5 +179,46 @@ namespace HttpHealthCheckDashboardLibTests
                 }
             }
         }
+
+        [Fact]
+        public void Can_GetMatch_ReturnCorrectCustomMatch()
+        {
+            IEnumerable<ApiDetail> urlDetails = new List<ApiDetail>()
+            {
+                new ApiDetail("api1", "url1", new ApiCredential("user1", "pass1"), true),
+                new ApiDetail("api2", "url2", new ApiCredential("user2", "pass2"), true),
+                new ApiDetail("Test1", "url3", new ApiCredential("user3", "pass3"), true),
+                new ApiDetail("api4", "url4", new ApiCredential("user4", "pass4"), true)
+            };
+
+            Mock<ICommonHealthCheck> commonHealthCheckMock = new();
+            Test1CustomMatchHealthCheck test1CustomMatchHealthCheck = new(urlDetails, commonHealthCheckMock.Object);
+
+            commonHealthCheckMock
+                .Setup(s => s.IsApiHealthy(urlDetails.ElementAt(2)))
+                .Returns(true);
+
+            MethodInfo? GetMatchInfo = test1CustomMatchHealthCheck.GetType()
+                .GetMethod("GetMatch", BindingFlags.NonPublic | BindingFlags.Instance);
+
+            Assert.NotNull(GetMatchInfo);
+            if (GetMatchInfo != null)
+            {
+                object? returnVal = GetMatchInfo.Invoke(test1CustomMatchHealthCheck, null);
+                Assert.NotNull(returnVal);
+                if (returnVal != null)
+                {
+                    Predicate<ApiDetail> match = (Predicate<ApiDetail>)returnVal;
+                    ApiDetail? apiDetail = urlDetails.ToList().Find(match);
+                    Assert.NotNull(apiDetail);
+                    Assert.Equal("Test1", apiDetail!.Name);
+                    Assert.Equal("url3", apiDetail.Url);
+                    Assert.NotNull(apiDetail.ApiCredential);
+                    Assert.Equal("user3", apiDetail.ApiCredential!.UserName);
+                    Assert.Equal("pass3", apiDetail.ApiCredential!.Password);
+                    Assert.True(apiDetail.IsEnable);
+                }
+            }
+        }
     }
 }
