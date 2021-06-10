@@ -49,12 +49,12 @@ jobs:
       run: dotnet publish 'HttpHealthCheckDashboard/HttpHealthCheckDashboard.csproj' --configuration ${{ env.CONFIGURATION }} -o 'HttpHealthCheckDashboard/bin/publish'
     
     - name: Docker build
-      run: docker build -f 'HttpHealthCheckDashboard/Dockerfile' -t docker.pkg.github.com/arnab-developer/httphealthcheckdashboard/httphealthcheckdashboard:1.0.9 .
+      run: docker build -f 'HttpHealthCheckDashboard/Dockerfile' -t docker.pkg.github.com/arnab-developer/httphealthcheckdashboard/httphealthcheckdashboard:2.0.0 .
     
     - name: Docker push
       run: |
         echo "${{ secrets.GITHUB_TOKEN }}" | docker login https://docker.pkg.github.com -u Arnab-Developer --password-stdin
-        docker push docker.pkg.github.com/arnab-developer/httphealthcheckdashboard/httphealthcheckdashboard:1.0.9
+        docker push docker.pkg.github.com/arnab-developer/httphealthcheckdashboard/httphealthcheckdashboard:2.0.0
 
   dockerhub-deploy:
     if: ${{ github.event_name == 'release' }}
@@ -78,9 +78,9 @@ jobs:
       run: dotnet publish 'HttpHealthCheckDashboard/HttpHealthCheckDashboard.csproj' --configuration ${{ env.CONFIGURATION }} -o 'HttpHealthCheckDashboard/bin/publish'
 
     - name: Docker build
-      run: docker build -f 'HttpHealthCheckDashboard/Dockerfile' -t 45862391/httphealthcheckdashboard:1.0.9 .
+      run: docker build -f 'HttpHealthCheckDashboard/Dockerfile' -t 45862391/httphealthcheckdashboard:2.0.0 .
 
     - name: Docker push
       run: |
         echo "${{ secrets.DOCKERHUB_PWD }}" | docker login -u 45862391 --password-stdin
-        docker push 45862391/httphealthcheckdashboard:1.0.9
+        docker push 45862391/httphealthcheckdashboard:2.0.0
