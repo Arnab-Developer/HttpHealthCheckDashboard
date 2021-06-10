@@ -5,8 +5,9 @@ namespace HttpHealthCheckDashboardLib.HealthChecks
 {
     public class TwitterHealthCheck : BaseHealthCheck
     {
-        public TwitterHealthCheck(IEnumerable<ApiDetail> urlDetails, ICommonHealthCheck commonHealthCheck)
-            : base(urlDetails, commonHealthCheck)
+        public TwitterHealthCheck(IEnumerable<ApiDetail> urlDetails, ICommonHealthCheck commonHealthCheck,
+            IApiDetailFinder apiDetailFinder)
+            : base(urlDetails, commonHealthCheck, apiDetailFinder)
         {
         }
     }
