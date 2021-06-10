@@ -2,8 +2,11 @@
 using HttpHealthCheckDashboardLib;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Moq;
+using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
+using System.Reflection;
 using System.Threading;
 using Xunit;
 
@@ -136,7 +139,7 @@ namespace HttpHealthCheckDashboardLibTests
             Assert.Equal(HealthCheckResult.Healthy(), healthCheckResult);
         }
 
-        /*[Fact]
+        [Fact]
         public void Can_GetMatch_ReturnCorrectMatch()
         {
             IEnumerable<ApiDetail> urlDetails = new List<ApiDetail>()
@@ -148,17 +151,30 @@ namespace HttpHealthCheckDashboardLibTests
             };
 
             Mock<ICommonHealthCheck> commonHealthCheckMock = new();
-            Microsoft.Extensions.Diagnostics.HealthChecks.IHealthCheck healthCheck 
-                = new TestHealthCheck(urlDetails, commonHealthCheckMock.Object);
-
+            TestHealthCheck testHealthCheck = new(urlDetails, commonHealthCheckMock.Object);
             commonHealthCheckMock
                 .Setup(s => s.IsApiHealthy(urlDetails.ElementAt(2)))
                 .Returns(true);
-
-            HealthCheckResult healthCheckResult = healthCheck.CheckHealthAsync(
-                new HealthCheckContext(), new CancellationToken()).Result;
-
-            Assert.Equal(HealthCheckResult.Healthy(), healthCheckResult);
-        }*/
+            MethodInfo? GetMatchInfo = testHealthCheck.GetType()
+                .GetMethod("GetMatch", BindingFlags.NonPublic | BindingFlags.Instance);
+            Assert.NotNull(GetMatchInfo);
+            if (GetMatchInfo != null)
+            {
+                object? returnVal = GetMatchInfo.Invoke(testHealthCheck, null);                
+                Assert.NotNull(returnVal);                
+                if (returnVal != null)
+                {
+                    Predicate<ApiDetail> match = (Predicate<ApiDetail>)returnVal;
+                    ApiDetail? apiDetail = urlDetails.ToList().Find(match);
+                    Assert.NotNull(apiDetail);
+                    Assert.Equal("Test", apiDetail!.Name);
+                    Assert.Equal("url3", apiDetail.Url);
+                    Assert.NotNull(apiDetail.ApiCredential);
+                    Assert.Equal("user3", apiDetail.ApiCredential!.UserName);
+                    Assert.Equal("pass3", apiDetail.ApiCredential!.Password);
+                    Assert.True(apiDetail.IsEnable);
+                }
+            }
+        }
     }
 }
