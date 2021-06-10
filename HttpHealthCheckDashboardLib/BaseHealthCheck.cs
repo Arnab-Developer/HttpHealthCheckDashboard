@@ -24,7 +24,7 @@ namespace HttpHealthCheckDashboardLib
             HealthCheckContext context, CancellationToken cancellationToken)
         {
             string apiNameToTest = GetType().Name.Substring(0, GetType().Name.IndexOf("HealthCheck"));
-            ApiDetail? apiDetail = _urlDetails.FirstOrDefault(u => u.Name == apiNameToTest && u.IsEnable);
+            ApiDetail? apiDetail = _urlDetails.ToList().Find(u => u.Name == apiNameToTest && u.IsEnable);
 
             return _commonHealthCheck.IsApiHealthy(apiDetail)
                 ? Task.FromResult(HealthCheckResult.Healthy())
