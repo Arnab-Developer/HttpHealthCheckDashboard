@@ -1,7 +1,5 @@
-using Arc.HttpHealthCheckDashboard;
 using Arc.HttpHealthCheckDashboard.DI;
 using ArnabDeveloper.HttpHealthCheck;
-using ArnabDeveloper.HttpHealthCheck.DI;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
