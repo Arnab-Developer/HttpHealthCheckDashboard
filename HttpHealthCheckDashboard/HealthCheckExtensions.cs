@@ -17,7 +17,7 @@ namespace HttpHealthCheckDashboard
                 .AddCheck<InstagramHealthCheck>("Instagram")
                 .AddCheck<InactiveUrlHealthCheck>("InactiveUrl")
                 .AddCheck<InvalidUrlHealthCheck>("InvalidUrl")
-                .AddCheck<GmailHealthCheck>("Gmail");
+                .AddCheck<GmailHC>("Gmail");
 
         public static void MapHealthChecksUrls(this IEndpointRouteBuilder endpoints)
         {
