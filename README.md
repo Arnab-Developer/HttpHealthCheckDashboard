@@ -91,12 +91,3 @@ public static void MapHealthChecksUrls(this IEndpointRouteBuilder endpoints)
 
 - Open your bowser and navigate to `http://localhost:[your-machine-port]/hc-ui` and you 
 should see your new URI in the health check app.
-
-## License
-
-[MIT License](https://github.com/Arnab-Developer/HttpHealthCheckDashboard/blob/main/LICENSE)
-
-## Contributing
-
-Please read [this](https://github.com/Arnab-Developer/HttpHealthCheckDashboard/blob/main/CONTRIBUTING.md) 
-for contribution related guidelines.
