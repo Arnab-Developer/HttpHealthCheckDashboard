@@ -13,12 +13,6 @@ This app has been hosted in
 [docker hub](https://hub.docker.com/r/45862391/httphealthcheckdashboard) in a 
 container image.
 
-## Tech stack
-
-- Visual Studio 2019
-- ASP.NET 5
-- Docker hub for container hosting
-
 ## How to extend this app
 
 This app is checking health of some URIs, you can find them in `appsettings.json`
