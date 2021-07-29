@@ -21,7 +21,7 @@ in this app then do the following changes.
 
 - Add a new section in `appsettings.json` under `ApiDetails`
 
-```
+```json
 "ApiDetails": [
   {
     "Name": "[name of the URI]",
@@ -37,7 +37,7 @@ in this app then do the following changes.
 
 - Add a new section in `appsettings.json` under `HealthChecks-UI` -> `HealthChecks`
 
-```
+```json
 "HealthChecks-UI": {
   "HealthChecks": [
     {
@@ -51,7 +51,7 @@ in this app then do the following changes.
 - Create a new class inside `HttpHealthCheckDashboard` -> `HealthChecks` which
 inherits `BaseHealthCheck`
 
-```
+```csharp
 public class [ClassName]HealthCheck : BaseHealthCheck
 {
     public [ClassName]HealthCheck(IEnumerable<ApiDetail> urlDetails, ICommonHealthCheck commonHealthCheck)
@@ -63,7 +63,7 @@ public class [ClassName]HealthCheck : BaseHealthCheck
 
 - Add the class into `HttpHealthCheckDashboard.HealthCheckExtensions.AddHealthChecksUrls(this IServiceCollection services)`
 
-```
+```csharp
 public static IHealthChecksBuilder AddHealthChecksUrls(this IServiceCollection services) =>
     services
         .AddHealthChecks()
@@ -72,7 +72,7 @@ public static IHealthChecksBuilder AddHealthChecksUrls(this IServiceCollection s
 
 - Add endpoint mapping in `HttpHealthCheckDashboard.HealthCheckExtensions.MapHealthChecksUrls(this IEndpointRouteBuilder endpoints)`
 
-```
+```csharp
 public static void MapHealthChecksUrls(this IEndpointRouteBuilder endpoints)
 {
     endpoints.MapHealthChecks("/[classname]-hc", new HealthCheckOptions()
