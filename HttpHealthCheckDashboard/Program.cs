@@ -1,20 +1,25 @@
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.Hosting;
+using Arc.HttpHealthCheckDashboard.DI;
+using HttpHealthCheckDashboard;
 
-namespace HttpHealthCheckDashboard
+WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
+builder.Services.AddHttpHealthCheckDashboard(builder.Configuration);
+builder.Services.AddHealthChecksUrls();
+builder.Services.AddHealthChecksUI().AddInMemoryStorage();
+
+WebApplication app = builder.Build();
+if (app.Environment.IsDevelopment())
 {
-    public class Program
-    {
-        public static void Main(string[] args)
-        {
-            CreateHostBuilder(args).Build().Run();
-        }
-
-        public static IHostBuilder CreateHostBuilder(string[] args) =>
-            Host.CreateDefaultBuilder(args)
-                .ConfigureWebHostDefaults(webBuilder =>
-                {
-                    webBuilder.UseStartup<Startup>();
-                });
-    }
+    app.UseDeveloperExceptionPage();
 }
+app.UseRouting();
+app.UseHealthChecksUI(config => config.UIPath = "/hc-ui");
+app.UseEndpoints(endpoints =>
+{
+    endpoints.MapHealthChecksUrls();
+    endpoints.MapGet("/", async context =>
+    {
+        await context.Response.WriteAsync("Hello World!");
+    });
+});
+
+app.Run();
