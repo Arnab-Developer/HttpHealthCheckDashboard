@@ -4,8 +4,6 @@ This is a dashboard to show health check results of your favorite http web apps.
 
 ![image](https://user-images.githubusercontent.com/3396447/117486658-8747af80-af87-11eb-883f-da6f8a4532cf.png)
 
-## Docker image
-
 This app has been hosted in 
 [docker hub](https://hub.docker.com/r/45862391/httphealthcheckdashboard) in a 
 container image.
@@ -51,8 +49,8 @@ inherits `BaseHealthCheck`
 ```csharp
 public class [ClassName]HealthCheck : BaseHealthCheck
 {
-    public [ClassName]HealthCheck(IEnumerable<ApiDetail> urlDetails, ICommonHealthCheck commonHealthCheck)
-        : base(urlDetails, commonHealthCheck)
+    public [ClassName]HealthCheck(IEnumerable<ApiDetail> urlDetails, 
+        ICommonHealthCheck commonHealthCheck) : base(urlDetails, commonHealthCheck)
     {
     }
 }
