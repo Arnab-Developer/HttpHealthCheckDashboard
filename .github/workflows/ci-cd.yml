@@ -28,6 +28,12 @@ jobs:
     - name: Build
       run: dotnet build --configuration ${{ env.CONFIGURATION }}
 
+    - name: Publish
+      run: dotnet publish 'HttpHealthCheckDashboard/HttpHealthCheckDashboard.csproj' --configuration ${{ env.CONFIGURATION }} -o 'HttpHealthCheckDashboard/bin/publish'
+    
+    - name: Docker build
+      run: docker build -f 'HttpHealthCheckDashboard/Dockerfile' -t docker.pkg.github.com/arnab-developer/httphealthcheckdashboard/httphealthcheckdashboard:2.0.6 .
+
   github-package-deploy:
     if: ${{ github.event_name == 'push' }}
     name: GitHub package deploy
