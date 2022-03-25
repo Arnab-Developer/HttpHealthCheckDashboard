@@ -32,7 +32,7 @@ jobs:
       run: dotnet publish 'HttpHealthCheckDashboard/HttpHealthCheckDashboard.csproj' --configuration ${{ env.CONFIGURATION }} -o 'HttpHealthCheckDashboard/bin/publish'
     
     - name: Docker build
-      run: docker build -f 'HttpHealthCheckDashboard/Dockerfile' -t docker.pkg.github.com/arnab-developer/httphealthcheckdashboard/httphealthcheckdashboard:2.0.6 .
+      run: docker build -f 'HttpHealthCheckDashboard/Dockerfile' -t ghcr.io/arnab-developer/httphealthcheckdashboard/httphealthcheckdashboard:2.0.6 .
 
   codeql-analysis:    
     name: CodeQL analysis
@@ -72,12 +72,12 @@ jobs:
       run: dotnet publish 'HttpHealthCheckDashboard/HttpHealthCheckDashboard.csproj' --configuration ${{ env.CONFIGURATION }} -o 'HttpHealthCheckDashboard/bin/publish'
     
     - name: Docker build
-      run: docker build -f 'HttpHealthCheckDashboard/Dockerfile' -t docker.pkg.github.com/arnab-developer/httphealthcheckdashboard/httphealthcheckdashboard:2.0.6 .
+      run: docker build -f 'HttpHealthCheckDashboard/Dockerfile' -t ghcr.io/arnab-developer/httphealthcheckdashboard/httphealthcheckdashboard:2.0.6 .
     
     - name: Docker push
       run: |
         echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u Arnab-Developer --password-stdin
-        docker push docker.pkg.github.com/arnab-developer/httphealthcheckdashboard/httphealthcheckdashboard:2.0.6
+        docker push ghcr.io/arnab-developer/httphealthcheckdashboard/httphealthcheckdashboard:2.0.6
         docker logout ghcr.io
 
   dockerhub-deploy:
