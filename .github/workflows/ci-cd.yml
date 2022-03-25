@@ -76,9 +76,9 @@ jobs:
     
     - name: Docker push
       run: |
-        echo "${{ secrets.GITHUB_TOKEN }}" | docker login https://docker.pkg.github.com -u Arnab-Developer --password-stdin
+        echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u Arnab-Developer --password-stdin
         docker push docker.pkg.github.com/arnab-developer/httphealthcheckdashboard/httphealthcheckdashboard:2.0.6
-        docker logout https://docker.pkg.github.com
+        docker logout ghcr.io
 
   dockerhub-deploy:
     if: ${{ github.event_name == 'release' }}
